@@ -69,6 +69,8 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+$OutputEncoding = [System.Text.Encoding]::UTF8
 
 # ═══════════════════════════════════════════════════════════════════════════
 #  Helpers
@@ -336,6 +338,7 @@ if (-not $FrontendOnly) {
 
     $backendJob = Start-Job -Name "Backend-API" -ScriptBlock {
         param($path, $port, $envVars)
+        [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
         Set-Location $path
         $env:ASPNETCORE_ENVIRONMENT = "Development"
         $env:ASPNETCORE_URLS = "http://localhost:$port"
@@ -398,6 +401,7 @@ if (-not $BackendOnly) {
 
     $frontendJob = Start-Job -Name "Frontend-Dev" -ScriptBlock {
         param($path, $envVars)
+        [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
         Set-Location $path
         foreach ($key in $envVars.Keys) {
             [Environment]::SetEnvironmentVariable($key, $envVars[$key], "Process")
