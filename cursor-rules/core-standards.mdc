@@ -1,0 +1,51 @@
+---
+description: Padroes universais para todos os projetos que usam o core-system
+alwaysApply: true
+---
+
+# Core Standards
+
+## Language Rules
+
+- **Code** (variables, classes, methods, files, internal comments): English
+- **UI text** (labels, messages, validation errors, toasts): pt-BR
+- **API error messages** returned to the client: pt-BR
+- **Commit messages**: English, imperative mood, conventional commits format
+- **Branch names**: English, kebab-case (`feature/user-auth`, `fix/login-validation`)
+
+## Naming Conventions
+
+### Backend (C#)
+- Classes/Methods: `PascalCase` (`ClientService`, `GetByIdAsync`)
+- Interfaces: `I` prefix (`IClientService`, `ICoreAuthService`)
+- Private fields: `_camelCase` (`_dbContext`, `_logger`)
+- Async methods: suffix `Async` (`CreateUserAsync`, `ValidateAsync`)
+- Constants: `PascalCase` (`MaxPageSize`, `BcryptWorkFactor`)
+
+### Frontend (TypeScript)
+- Components: `PascalCase` file or kebab-case (`ClientCard.tsx` or `client-card.tsx`)
+- Hooks: `camelCase` with `use` prefix (`useAuth`, `useDebounce`)
+- Utilities: `kebab-case` (`api-client.ts`, `format.ts`)
+- Types/Interfaces: `PascalCase` with descriptive suffix (`ClientFormProps`, `LoginRequest`)
+
+## Repository Rules
+
+- Do NOT create documentation files (.md) unless explicitly requested
+- Do NOT create backup files or duplicates
+- Keep commits atomic and focused
+- Verify build passes before completing any task (`dotnet build` / `npm run build`)
+
+## Error Handling
+
+- Never catch and swallow exceptions silently
+- Backend: log errors with structured logging, return meaningful error to client
+- Frontend: handle loading, success, and error states for all async operations
+- Validation messages always in pt-BR
+
+## Architecture
+
+- Services: always create interface + implementation
+- DTOs: use `record` types for immutability (C#) or `interface`/`type` (TS)
+- No AutoMapper -- use explicit mapping methods
+- All I/O operations must be `async`
+- Constructor injection for DI; never use service locator pattern

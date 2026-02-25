@@ -1,0 +1,54 @@
+---
+description: Padroes para backend .NET com Core System
+globs: backend/**/*.cs, **/Controllers/**/*.cs, **/Services/**/*.cs, **/Models/**/*.cs
+alwaysApply: false
+---
+
+# Backend .NET Rules
+
+## Core System Integration
+
+This project uses `core-system` as a git submodule. Shared modules:
+- `Core.Auth` -- session-based auth, RBAC with string permissions, rate limiting
+- `Core.FileManagement` -- file upload/storage with deduplication
+- `Core.Infrastructure` -- MySQL via Pomelo, entity configurations
+
+```csharp
+// Permission checks use CoreAuthHelper
+var check = await CoreAuthHelper.CheckPermissionAsync(HttpContext, _authService, "music:upload");
+if (check is not null) return check;
+```
+
+## Controllers
+
+- Thin controllers: inject service, call method, return result
+- No business logic in controllers
+- Routes: `[Route("api/[controller]")]` in kebab-case
+- Return proper status codes: 200, 201, 204, 400, 401, 403, 404, 429
+
+## Services
+
+- One interface + one implementation per service
+- Services contain business logic; controllers do not
+- Pass `CancellationToken` through the call chain when available
+- Never use `.Result` or `.Wait()` -- always `await`
+
+## EF Core
+
+- Use `Include()` only when needed; avoid N+1
+- Apply pagination on listings (`Skip`/`Take`)
+- Use async methods (`ToListAsync`, `FirstOrDefaultAsync`)
+- Entity configurations via `IEntityTypeConfiguration<T>` or `ApplyCore*Entities()`
+
+## Logging
+
+- Use `ILogger<T>` with structured logging
+- `Information` for business events, `Warning` for recoverable issues, `Error` for failures
+- Never log sensitive data (passwords, tokens, PII)
+- Format: `_logger.LogInformation("User {Username} created", username)`
+
+## File Size Limits
+
+- Controllers: max 200 lines
+- Services: max 300 lines
+- If exceeded, split into smaller units

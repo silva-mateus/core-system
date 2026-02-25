@@ -1,0 +1,33 @@
+---
+description: Padroes de testes para backend e frontend
+globs: "**/*test*,**/*Test*,**/*spec*"
+alwaysApply: false
+---
+
+# Testing Rules
+
+## Backend (.NET)
+
+- Framework: xUnit
+- Naming: `MethodName_Scenario_ShouldExpectedResult`
+  - `CreateAsync_WhenUsernameExists_ShouldReturnFailure`
+  - `Login_WithInvalidPassword_ShouldReturnUnauthorized`
+- Pattern: Arrange-Act-Assert
+- Use InMemoryDatabase or test MySQL for DB tests
+- Mock external dependencies with NSubstitute or Moq
+- One test class per service: `CoreAuthServiceTests.cs`
+
+## Frontend (TypeScript)
+
+- Framework: Vitest + React Testing Library (or Jest)
+- Naming: `describe('Component')` -> `it('should display list when data loads')`
+- Test user interactions, not implementation details
+- Test loading, success, and error states
+- Test form validation with invalid inputs
+- Test permission-gated UI elements
+
+## General
+
+- Every new service method should have at least one happy-path test
+- Verify build before completing: `dotnet build` / `npm run build`
+- No `console.log` left in production code

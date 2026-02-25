@@ -1,0 +1,64 @@
+---
+description: Padroes para frontend Next.js com Core System
+globs: frontend/**/*.ts, frontend/**/*.tsx
+alwaysApply: false
+---
+
+# Frontend Next.js Rules
+
+## Core System Integration
+
+Import shared modules from `@core/*` (mapped via tsconfig paths to the core submodule):
+
+```tsx
+import { Button } from "@core/components/ui/button"
+import { useAuth } from "@core/contexts/auth-context"
+import { formatDate } from "@core/lib/format"
+import { useDebounce } from "@core/hooks/use-debounce"
+```
+
+Permission checks:
+```tsx
+const { hasPermission } = useAuth()
+if (hasPermission("music:upload")) { /* show button */ }
+```
+
+## Components
+
+- Functional components only, no class components
+- Props typed with interface: `interface ClientCardProps { ... }`
+- Keep components under 150 lines; extract subcomponents when needed
+- Prefer Server Components; use `'use client'` only when needed
+- Use shadcn/ui from `@core/components/ui/` for all base primitives
+
+## Forms
+
+- React Hook Form + Zod for all forms
+- Zod schema defined at component top or in a shared types file
+- Validation messages in pt-BR: `z.string().min(1, "Nome é obrigatório")`
+- Error messages from API: use `errorCode` to map to pt-BR via centralized mapper
+
+## Data Fetching
+
+- Use the core API client (`useAuth().api`) or `createApiClient()` for HTTP calls
+- Credentials are included automatically (`credentials: 'include'`)
+- Handle loading, success, and error states for every async operation
+- Show `Skeleton` for loading, toast for errors, `EmptyState` for empty lists
+
+## Styling
+
+- Tailwind CSS utility classes; avoid custom CSS
+- Use `cn()` from `@core/lib/utils` for conditional classes
+- Use CSS variables for colors (shadcn theme tokens)
+- Mobile-first: base classes then `sm:` / `md:` / `lg:`
+
+## Accessibility
+
+- All inputs must have associated `<Label>`
+- Interactive elements must be keyboard navigable
+- Use semantic HTML: `<main>`, `<nav>`, `<section>`
+
+## File Size Limits
+
+- Components: max 150 lines
+- If exceeded, extract into subcomponents or hooks

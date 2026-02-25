@@ -1,0 +1,28 @@
+---
+description: Template para regras especificas do projeto (copie e adapte)
+alwaysApply: true
+---
+
+# Projeto: [NOME DO PROJETO]
+
+## Domínio
+[Breve descrição do que o projeto faz]
+
+## Estrutura
+```
+projeto/
+├── backend/     # .NET API
+├── frontend/    # Next.js
+└── core/        # git submodule (core-system)
+```
+
+## Permissões do Projeto
+Definidas em `backend/Permissions.cs`:
+- `resource:action` (ex: `music:upload`, `clients:view`)
+
+## Regras Específicas
+[Regras que se aplicam apenas a este projeto, como:
+- Entidades de domínio específicas
+- Integrações externas
+- Formato de dados especiais (moeda, datas, etc.)
+- Padrões de URL/rotas do projeto]
