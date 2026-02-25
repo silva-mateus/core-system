@@ -1,0 +1,56 @@
+---
+description: Padroes para frontend Next.js do core-system
+globs: frontend/**/*.ts, frontend/**/*.tsx
+alwaysApply: false
+---
+
+# Frontend Next.js Rules
+
+## Core Frontend Library
+
+This is a **shared component library**, not a standalone app. All exports are consumed via `@core/*` path alias in host projects.
+
+Exports include:
+- `@core/components/ui/*` -- shadcn/ui primitives (Button, Dialog, Input, etc.)
+- `@core/contexts/auth-context` -- `CoreAuthProvider`, `useAuth()`
+- `@core/hooks/*` -- `useDebounce`, `useToast`, `useMobile`
+- `@core/lib/*` -- `apiClient`, `format`, `storage`, `cn()`
+- `@core/types/*` -- shared TypeScript types
+
+## Components
+
+- Functional components only, no class components
+- Props typed with interface: `interface ClientCardProps { ... }`
+- Keep components under 150 lines; extract subcomponents when needed
+- Use shadcn/ui patterns -- `cva()` for variants, `cn()` for class merging
+- New UI primitives follow the existing shadcn/ui structure in `components/ui/`
+
+## Forms
+
+- React Hook Form + Zod for all forms
+- Zod schema defined at component top or in a shared types file
+- Validation messages in pt-BR: `z.string().min(1, "Nome é obrigatório")`
+
+## Data Fetching
+
+- Use the core API client (`useAuth().api`) or `createApiClient()` for HTTP calls
+- Credentials included automatically (`credentials: 'include'`)
+- Handle loading, success, and error states for every async operation
+
+## Styling
+
+- Tailwind CSS utility classes; avoid custom CSS
+- Use `cn()` from `@core/lib/utils` for conditional classes
+- CSS variables for colors (shadcn theme tokens)
+- Mobile-first: base classes then `sm:` / `md:` / `lg:`
+
+## Accessibility
+
+- All inputs must have associated `<Label>`
+- Interactive elements must be keyboard navigable
+- Use semantic HTML: `<main>`, `<nav>`, `<section>`
+
+## File Size Limits
+
+- Components: max 150 lines
+- If exceeded, extract into subcomponents or hooks

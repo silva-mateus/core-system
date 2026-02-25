@@ -1,0 +1,47 @@
+---
+description: Padroes de seguranca e autenticacao com Core.Auth
+globs: "**/*auth*,**/*Auth*,**/Controllers/**,**/Middleware/**"
+alwaysApply: false
+---
+
+# Security & Auth Rules
+
+## Session-Based Auth (Core.Auth)
+
+- Auth uses HttpOnly session cookies, NOT JWT
+- Session configured via `AddCoreAuth()` with configurable timeout and cookie name
+- Rate limiting: 5 attempts per IP+username, 15min lockout
+- Passwords hashed with BCrypt (work factor 12)
+
+## Permission Checks
+
+Backend -- always check before sensitive operations:
+```csharp
+var authCheck = CoreAuthHelper.CheckAuthentication(HttpContext);
+if (authCheck is not null) return authCheck;
+
+var permCheck = await CoreAuthHelper.CheckPermissionAsync(HttpContext, _authService, "music:upload");
+if (permCheck is not null) return permCheck;
+```
+
+Frontend -- gate UI elements by permission:
+```tsx
+const { hasPermission, isAuthenticated } = useAuth()
+{hasPermission("music:upload") && <UploadButton />}
+```
+
+## Security Principles
+
+- Never trust client-supplied IDs for authorization
+- Never log passwords, tokens, or PII
+- Validate ALL input server-side, even if frontend validates too
+- Use `X-Forwarded-For` header for real client IP behind proxies
+- Session cookies: HttpOnly, SameSite=Lax, Secure in production
+- Error messages should not reveal internal details to the client
+
+## Permissions
+
+- Permissions are string keys (`"music:upload"`, `"users:manage"`)
+- Defined as constants in each project's `Permissions.cs`
+- Assigned to roles via `RolePermission` table
+- Never hardcode permission checks by role name; always check by permission key

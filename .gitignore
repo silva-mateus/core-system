@@ -18,3 +18,13 @@ dist/
 # OS
 .DS_Store
 Thumbs.db
+
+# Secrets & sensitive config
+.env
+.env.*
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+*.pfx
+*.pem
+*.key

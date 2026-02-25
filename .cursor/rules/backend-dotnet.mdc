@@ -1,0 +1,55 @@
+---
+description: Padroes para backend .NET do core-system
+globs: backend/**/*.cs
+alwaysApply: false
+---
+
+# Backend .NET Rules
+
+## Core Modules
+
+- `Core.Common` -- base entities (`BaseEntity`, `IAuditableEntity`), `Result<T>` pattern, extension methods
+- `Core.Auth` -- session-based auth, RBAC with string permissions, rate limiting, audit middleware
+- `Core.FileManagement` -- file upload/storage with SHA-256 deduplication
+- `Core.Infrastructure` -- EF Core + MySQL via Pomelo, entity configurations
+
+## Library Design
+
+- All services expose an **interface** consumed by host projects
+- Extension methods for DI registration: `AddCoreAuth()`, `AddCoreInfrastructure()`, `AddCoreFileManagement()`
+- Public APIs must have **XML documentation** (`<summary>`, `<param>`, `<returns>`)
+- Use `Result<T>` from Core.Common for operation outcomes instead of throwing exceptions for business logic
+
+## Controllers
+
+- Thin controllers: inject service, call method, return result
+- No business logic in controllers
+- Routes: `[Route("api/[controller]")]` in kebab-case
+- Return proper status codes: 200, 201, 204, 400, 401, 403, 404, 429
+
+## Services
+
+- One interface + one implementation per service
+- Services contain business logic; controllers do not
+- Pass `CancellationToken` through the call chain when available
+- Never use `.Result` or `.Wait()` -- always `await`
+
+## EF Core
+
+- Use `Include()` only when needed; avoid N+1
+- Apply pagination on listings (`Skip`/`Take`)
+- Use async methods (`ToListAsync`, `FirstOrDefaultAsync`)
+- Entity configurations via `IEntityTypeConfiguration<T>` or `ApplyCore*Entities()`
+
+## Logging
+
+- Use `ILogger<T>` with structured logging
+- `Information` for business events, `Warning` for recoverable issues, `Error` for failures
+- Never log sensitive data (passwords, tokens, PII)
+- Format: `_logger.LogInformation("User {Username} created", username)`
+
+## File Size Limits
+
+- Controllers: max 200 lines
+- Services: max 300 lines
+- If exceeded, split into smaller units

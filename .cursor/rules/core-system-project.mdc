@@ -1,0 +1,39 @@
+---
+description: Contexto e regras especificas do core-system (biblioteca compartilhada)
+alwaysApply: true
+---
+
+# Projeto: core-system
+
+## O que é
+
+Biblioteca compartilhada usada como git submodule por projetos pessoais. Fornece autenticação, gerenciamento de arquivos, infraestrutura e componentes UI reutilizáveis.
+
+## Estrutura
+
+```
+core-system/
+├── backend/
+│   └── src/
+│       ├── Core.Common/          # BaseEntity, Result<T>, extensions
+│       ├── Core.Auth/            # Session auth, RBAC, rate limiting
+│       ├── Core.FileManagement/  # Upload, storage, deduplication
+│       └── Core.Infrastructure/  # EF Core + MySQL (Pomelo)
+├── frontend/
+│   ├── components/ui/            # shadcn/ui components
+│   ├── contexts/                 # CoreAuthProvider
+│   ├── hooks/                    # use-toast, use-debounce, use-mobile
+│   ├── lib/                      # api-client, format, storage, utils
+│   └── types/
+└── cursor-rules/                 # Rule templates for consuming projects
+```
+
+## Regras Específicas do Core
+
+- This is a **library**, not a standalone app -- no `Program.cs`, no `appsettings.json`, no `.env` here
+- Configuration is provided by consuming projects via extension methods (`AddCoreAuth()`, `AddCoreInfrastructure()`)
+- All public APIs must be well-documented with XML comments (backend) since consuming projects depend on them
+- Breaking changes to public interfaces require careful consideration
+- Frontend exports via `@core/*` path alias -- keep import paths stable
+- `cursor-rules/` contains templates for consuming projects; `.cursor/rules/` contains rules for this repo
+- When adding new shadcn/ui components, follow the existing pattern in `frontend/components/ui/`
