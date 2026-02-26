@@ -23,6 +23,7 @@ public static class CoreDatabaseExtensions
                     maxRetryDelay: TimeSpan.FromSeconds(10),
                     errorNumbersToAdd: null);
                 mysql.CommandTimeout(30);
+                mysql.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
             });
         });
 
