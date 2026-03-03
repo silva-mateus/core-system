@@ -366,7 +366,7 @@ if [ "$BACKEND_ONLY" != "true" ]; then
 fi
 
 if [ "$SKIP_DOCKER" != "true" ] && [ "$FRONTEND_ONLY" != "true" ] && [ "$DOCKER_MODE" != "none" ] && [ -n "$DOCKER_CONTAINER_NAME" ]; then
-    db_port=$(docker port "$DOCKER_CONTAINER_NAME" 3306 2>/dev/null | sed 's/0\.0\.0\.0://' || echo "")
+    db_port=$(docker port "$DOCKER_CONTAINER_NAME" 5432 2>/dev/null | sed 's/0\.0\.0\.0://' || echo "")
     if [ -n "$db_port" ]; then
         echo -e "  Database: ${GRAY}localhost:$db_port${NC}"
     fi

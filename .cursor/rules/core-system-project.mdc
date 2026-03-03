@@ -18,7 +18,7 @@ core-system/
 │       ├── Core.Common/          # BaseEntity, Result<T>, extensions
 │       ├── Core.Auth/            # Session auth, RBAC, rate limiting
 │       ├── Core.FileManagement/  # Upload, storage, deduplication
-│       └── Core.Infrastructure/  # EF Core + MySQL (Pomelo)
+│       └── Core.Infrastructure/  # EF Core + PostgreSQL (Npgsql)
 ├── frontend/
 │   ├── components/ui/            # shadcn/ui components
 │   ├── contexts/                 # CoreAuthProvider

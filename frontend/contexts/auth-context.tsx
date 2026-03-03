@@ -57,8 +57,8 @@ export function CoreAuthProvider({ children, config = {} }: AuthProviderProps) {
   )
 
   const [state, setState] = useState<AuthState>({
-    user: getFromStorage<CoreUser | null>(`${storagePrefix}_user`, null),
-    permissions: getFromStorage<string[]>(`${storagePrefix}_permissions`, []),
+    user: null,
+    permissions: [],
     isLoading: true,
     isAuthenticated: false,
   })
@@ -82,8 +82,18 @@ export function CoreAuthProvider({ children, config = {} }: AuthProviderProps) {
   }, [api, storagePrefix])
 
   useEffect(() => {
+    const cachedUser = getFromStorage<CoreUser | null>(`${storagePrefix}_user`, null)
+    const cachedPermissions = getFromStorage<string[]>(`${storagePrefix}_permissions`, [])
+    if (cachedUser) {
+      setState({
+        user: cachedUser,
+        permissions: cachedPermissions,
+        isLoading: true,
+        isAuthenticated: true,
+      })
+    }
     refreshUser()
-  }, [refreshUser])
+  }, [refreshUser, storagePrefix])
 
   const login = useCallback(
     async (username: string, password: string) => {

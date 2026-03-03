@@ -11,7 +11,7 @@ alwaysApply: false
 This project uses `core-system` as a git submodule. Shared modules:
 - `Core.Auth` -- session-based auth, RBAC with string permissions, rate limiting
 - `Core.FileManagement` -- file upload/storage with deduplication
-- `Core.Infrastructure` -- MySQL via Pomelo, entity configurations
+- `Core.Infrastructure` -- EF Core + PostgreSQL via Npgsql, entity configurations
 
 ```csharp
 // Permission checks use CoreAuthHelper

@@ -43,9 +43,9 @@ export FRONTEND_RUNNER="next"          # "next" or "vite"
 export FE_PORT_DEFAULT="3000"
 
 export DOCKER_MODE="external"          # "external", "compose", or "none"
-export DOCKER_CONTAINER_NAME="homelab-mysql"
+export DOCKER_CONTAINER_NAME="homelab-postgres"
 # export DOCKER_COMPOSE_FILE="docker/docker-compose.yml"
-# export DOCKER_COMPOSE_SERVICES="mysql"
+# export DOCKER_COMPOSE_SERVICES="postgres"
 
 # ── Run the core engine ──────────────────────────────────────────────────
 
@@ -88,7 +88,7 @@ exec "$SCRIPT_DIR/core/scripts/start-dev.sh" "$@"
 #
 #  DOCKER_CONTAINER_NAME   Container name for health check.
 #  DOCKER_COMPOSE_FILE     Relative path to docker-compose file.
-#  DOCKER_COMPOSE_SERVICES Space-separated services to start, e.g. "mysql redis"
+#  DOCKER_COMPOSE_SERVICES Space-separated services to start, e.g. "postgres redis"
 #
 #  CLI flags: --skip-docker, --backend-only, --frontend-only
 #
@@ -108,8 +108,8 @@ exec "$SCRIPT_DIR/core/scripts/start-dev.sh" "$@"
 #    export LOG_DIR="logs"
 #    export DOCKER_MODE="compose"
 #    export DOCKER_COMPOSE_FILE="docker/docker-compose.yml"
-#    export DOCKER_COMPOSE_SERVICES="mysql"
-#    export DOCKER_CONTAINER_NAME="gestao-mysql"
+#    export DOCKER_COMPOSE_SERVICES="postgres"
+#    export DOCKER_CONTAINER_NAME="gestao-postgres"
 #    export Serilog__MinimumLevel__Default="Debug"
 #    export LOG_TO_FILE="true"
 #    export LOG_RETENTION_DAYS="30"

@@ -48,7 +48,7 @@ param(
     -SwaggerPath        "/swagger" `
     -HealthPath         "/api/health" `
     -DockerMode         "external" `
-    -DockerContainerName "homelab-mysql" `
+    -DockerContainerName "homelab-postgres" `
     -SkipDocker:$SkipDocker `
     -BackendOnly:$BackendOnly `
     -FrontendOnly:$FrontendOnly
@@ -91,7 +91,7 @@ param(
 #
 #  -DockerContainerName  Container name for health check (external/compose modes).
 #  -DockerComposeFile    Relative path to docker-compose file (compose mode).
-#  -DockerComposeServices  Array of services to start, e.g. @("mysql")
+#  -DockerComposeServices  Array of services to start, e.g. @("postgres")
 #
 #  -BackendEnv         Hashtable of extra env vars for the backend job.
 #                      Example: @{ "Serilog__MinimumLevel__Default" = "Debug" }
@@ -117,8 +117,8 @@ param(
 #        -LogDir             "logs" `
 #        -DockerMode         "compose" `
 #        -DockerComposeFile  "docker\docker-compose.yml" `
-#        -DockerComposeServices @("mysql") `
-#        -DockerContainerName "gestao-mysql" `
+#        -DockerComposeServices @("postgres") `
+#        -DockerContainerName "gestao-postgres" `
 #        -BackendEnv @{
 #            "Serilog__MinimumLevel__Default" = "Debug"
 #            "LOG_TO_FILE"                    = "true"

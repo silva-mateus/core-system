@@ -8,7 +8,7 @@ namespace Core.Infrastructure.Extensions;
 public static class CoreDatabaseExtensions
 {
     /// <summary>
-    /// Registers the DbContext with MySQL (Pomelo) using standardized configuration.
+    /// Registers the DbContext with PostgreSQL (Npgsql) using standardized configuration.
     /// </summary>
     public static IServiceCollection AddCoreDatabase<TContext>(
         this IServiceCollection services,
@@ -16,14 +16,14 @@ public static class CoreDatabaseExtensions
     {
         services.AddDbContext<TContext>(options =>
         {
-            options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), mysql =>
+            options.UseNpgsql(connectionString, npgsql =>
             {
-                mysql.EnableRetryOnFailure(
+                npgsql.EnableRetryOnFailure(
                     maxRetryCount: 3,
                     maxRetryDelay: TimeSpan.FromSeconds(10),
-                    errorNumbersToAdd: null);
-                mysql.CommandTimeout(30);
-                mysql.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+                    errorCodesToAdd: null);
+                npgsql.CommandTimeout(30);
+                npgsql.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
             });
         });
 

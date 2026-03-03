@@ -11,7 +11,7 @@ alwaysApply: false
 - `Core.Common` -- base entities (`BaseEntity`, `IAuditableEntity`), `Result<T>` pattern, extension methods
 - `Core.Auth` -- session-based auth, RBAC with string permissions, rate limiting, audit middleware
 - `Core.FileManagement` -- file upload/storage with SHA-256 deduplication
-- `Core.Infrastructure` -- EF Core + MySQL via Pomelo, entity configurations
+- `Core.Infrastructure` -- EF Core + PostgreSQL via Npgsql, entity configurations
 
 ## Library Design
 

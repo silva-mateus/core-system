@@ -11,6 +11,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.FileManagement", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Infrastructure", "src\Core.Infrastructure\Core.Infrastructure.csproj", "{A1B2C3D4-0001-0001-0001-000000000004}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Common.Tests", "tests\Core.Common.Tests\Core.Common.Tests.csproj", "{B1B2C3D4-0001-0001-0001-000000000001}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Auth.Tests", "tests\Core.Auth.Tests\Core.Auth.Tests.csproj", "{B1B2C3D4-0001-0001-0001-000000000002}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.FileManagement.Tests", "tests\Core.FileManagement.Tests\Core.FileManagement.Tests.csproj", "{B1B2C3D4-0001-0001-0001-000000000003}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Infrastructure.Tests", "tests\Core.Infrastructure.Tests\Core.Infrastructure.Tests.csproj", "{B1B2C3D4-0001-0001-0001-000000000004}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,5 +41,21 @@ Global
 		{A1B2C3D4-0001-0001-0001-000000000004}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1B2C3D4-0001-0001-0001-000000000004}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1B2C3D4-0001-0001-0001-000000000004}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1B2C3D4-0001-0001-0001-000000000001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1B2C3D4-0001-0001-0001-000000000001}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1B2C3D4-0001-0001-0001-000000000001}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1B2C3D4-0001-0001-0001-000000000001}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1B2C3D4-0001-0001-0001-000000000002}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1B2C3D4-0001-0001-0001-000000000002}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1B2C3D4-0001-0001-0001-000000000002}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1B2C3D4-0001-0001-0001-000000000002}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1B2C3D4-0001-0001-0001-000000000003}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1B2C3D4-0001-0001-0001-000000000003}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1B2C3D4-0001-0001-0001-000000000003}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1B2C3D4-0001-0001-0001-000000000003}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1B2C3D4-0001-0001-0001-000000000004}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1B2C3D4-0001-0001-0001-000000000004}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1B2C3D4-0001-0001-0001-000000000004}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1B2C3D4-0001-0001-0001-000000000004}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -444,7 +444,7 @@ if (-not $BackendOnly) {
     Write-Host "  Frontend: " -NoNewline; Write-Host "http://localhost:$frontendPort" -ForegroundColor Green
 }
 if (-not $SkipDocker -and -not $FrontendOnly -and $DockerMode -ne "none" -and $DockerContainerName) {
-    $dbPort = docker port $DockerContainerName 3306 2>$null
+    $dbPort = docker port $DockerContainerName 5432 2>$null
     if ($dbPort) {
         $dbPort = $dbPort -replace '0\.0\.0\.0:', ''
         Write-Host "  Database: " -NoNewline; Write-Host "localhost:$dbPort" -ForegroundColor DarkGray

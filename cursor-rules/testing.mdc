@@ -13,7 +13,7 @@ alwaysApply: false
   - `CreateAsync_WhenUsernameExists_ShouldReturnFailure`
   - `Login_WithInvalidPassword_ShouldReturnUnauthorized`
 - Pattern: Arrange-Act-Assert
-- Use InMemoryDatabase or test MySQL for DB tests
+- Use InMemoryDatabase or test PostgreSQL for DB tests
 - Mock external dependencies with NSubstitute or Moq
 - One test class per service: `CoreAuthServiceTests.cs`
 
