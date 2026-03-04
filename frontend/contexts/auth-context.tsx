@@ -38,6 +38,26 @@ interface AuthContextValue extends AuthState {
 
 const AuthContext = createContext<AuthContextValue | null>(null)
 
+interface ApiUserResponse {
+  id: number
+  username: string
+  full_name?: string
+  fullName?: string
+  role: string | null
+  must_change_password?: boolean
+  mustChangePassword?: boolean
+}
+
+function mapUser(raw: ApiUserResponse): CoreUser {
+  return {
+    id: raw.id,
+    username: raw.username,
+    fullName: raw.full_name ?? raw.fullName ?? "",
+    role: raw.role,
+    mustChangePassword: raw.must_change_password ?? raw.mustChangePassword ?? false,
+  }
+}
+
 interface AuthProviderProps {
   children: ReactNode
   config?: CoreAuthConfig
@@ -65,14 +85,15 @@ export function CoreAuthProvider({ children, config = {} }: AuthProviderProps) {
 
   const refreshUser = useCallback(async () => {
     try {
-      const data = await api.get<{ user: CoreUser; permissions: string[] }>("/auth/me")
+      const data = await api.get<{ user: ApiUserResponse; permissions: string[] }>("/auth/me")
+      const user = mapUser(data.user)
       setState({
-        user: data.user,
+        user,
         permissions: data.permissions,
         isLoading: false,
         isAuthenticated: true,
       })
-      setToStorage(`${storagePrefix}_user`, data.user)
+      setToStorage(`${storagePrefix}_user`, user)
       setToStorage(`${storagePrefix}_permissions`, data.permissions)
     } catch {
       setState({ user: null, permissions: [], isLoading: false, isAuthenticated: false })
@@ -97,19 +118,20 @@ export function CoreAuthProvider({ children, config = {} }: AuthProviderProps) {
 
   const login = useCallback(
     async (username: string, password: string) => {
-      const data = await api.post<{ user: CoreUser; permissions: string[] }>("/auth/login", {
+      const data = await api.post<{ user: ApiUserResponse; permissions: string[] }>("/auth/login", {
         username,
         password,
       })
+      const user = mapUser(data.user)
       setState({
-        user: data.user,
+        user,
         permissions: data.permissions,
         isLoading: false,
         isAuthenticated: true,
       })
-      setToStorage(`${storagePrefix}_user`, data.user)
+      setToStorage(`${storagePrefix}_user`, user)
       setToStorage(`${storagePrefix}_permissions`, data.permissions)
-      return { mustChangePassword: data.user.mustChangePassword }
+      return { mustChangePassword: user.mustChangePassword }
     },
     [api, storagePrefix]
   )
@@ -128,7 +150,7 @@ export function CoreAuthProvider({ children, config = {} }: AuthProviderProps) {
 
   const changePassword = useCallback(
     async (currentPassword: string, newPassword: string) => {
-      await api.post("/auth/change-password", { currentPassword, newPassword })
+      await api.post("/auth/change-password", { current_password: currentPassword, new_password: newPassword })
       await refreshUser()
     },
     [api, refreshUser]
@@ -136,7 +158,7 @@ export function CoreAuthProvider({ children, config = {} }: AuthProviderProps) {
 
   const updateProfile = useCallback(
     async (fullName: string) => {
-      await api.put("/auth/profile", { fullName })
+      await api.put("/auth/profile", { full_name: fullName })
       await refreshUser()
     },
     [api, refreshUser]
